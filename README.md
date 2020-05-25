@@ -7,6 +7,7 @@ Created using Java 11.
 Run with the following commands, from the project's root directory:
 
 mvc package 
+
 java -jar ./target/Tetris-1.0-SNAPSHOT.jar 
 
 Developer: Oszuszki Richárd.
