@@ -6,9 +6,18 @@ import org.json.simple.JSONObject;
 
 import java.io.*;
 
+/**
+ * This class will write to .json file.
+ * <code>data</code> Store the data here.
+ */
 public class WriteToJSON {
     public static JSONArray data = new JSONArray();
 
+    /**
+     * The <code>records</code> method put the score, and the destroyed lines number (from Tetris class), two jsonobject, and add it to data
+     * jsonarray, and store.
+     * Call the <code>myfilewriter()</code> method, this will write to .json file.
+     */
     public static void records() {
         String scoreT = Integer.toString(Tetris.score);
         String lineT = Integer.toString(Tetris.linesNo);
@@ -29,6 +38,9 @@ public class WriteToJSON {
 
     }
 
+    /**
+     * This method point to "table.json" fill, we will put the <code>data</code> jsonarray into.
+     */
     public static void myfilewriter() {
 
         try (FileWriter file = new FileWriter("table.json")) {
@@ -39,6 +51,9 @@ public class WriteToJSON {
         }
     }
 
+    /**
+     * This method will clear the old .json file.
+     */
     public static void deleteF(){
 
         data = new JSONArray();

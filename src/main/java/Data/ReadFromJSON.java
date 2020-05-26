@@ -12,12 +12,23 @@ import java.util.ArrayList;
 
 public class ReadFromJSON {
 
+    /**
+     * <code>myreadlist</code> We will add into the read data.
+     */
     public static JSONArray myreadlist;
     public static ArrayList<String> scores;
     public static ArrayList<String> player;
     public static ArrayList<String> lines;
 
-
+    /**
+     * <code>@SuppressWarnings("unchecked")</code> Sometimes Java generics just doesn't let you do what you want to,
+     * and you need to effectively tell the compiler that what you're doing really will be legal at execution time.
+     *
+     * This method will read .json file.
+     * Create a reader, witch will read the "table.json", then we put the file content, into the <code>obj</code> after
+     * we convert to array, and put into <code>myreadlist</code> separately. Separated with the method <code>listParting</code>
+     * method.
+     */
     @SuppressWarnings("unchecked")
     public static void read(){
         scores = new ArrayList<>();
@@ -39,6 +50,13 @@ public class ReadFromJSON {
         }
     }
 
+    /**
+     * This method will parting the read list to two different arraylist.
+     * <code>player</code> The player name.
+     * <code>scores</code> The earned score.
+     * <code>lines</code> The destroyed lines.
+     * @param actions This gets the json object, and the method will parting this.
+     */
     public static void listParting(JSONObject actions)
     {
         JSONObject listObject = (JSONObject) actions.get("Action");
