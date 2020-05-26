@@ -90,7 +90,7 @@ public class Tetris extends Application {
         nextObj = Controller.makeRect();
 
         stage.setScene(scene);
-        stage.setTitle("T E T R I S");
+        stage.setTitle("TETRIS");
         stage.show();
 
 
@@ -129,8 +129,10 @@ public class Tetris extends Application {
                             WriteToJSON.deleteF();
                             WriteToJSON.records();
                             ReadFromJSON.read();
-                            TopTenController.upload();
-                            //stage.setTitle("Rolling cubes");
+
+                            //TopTenController.upload();
+
+                            //stage.setTitle("Tetris");
                             //stage.setResizable(false);
                             //stage.setScene(new Scene(root));
                             //stage.show();
@@ -156,7 +158,6 @@ public class Tetris extends Application {
 
     /**
      * Key events.
-     * @param form The form condition number.
      */
     private void moveOnKeyPress(Form form) {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -478,14 +479,17 @@ public class Tetris extends Application {
     }
 
     /**
-     *
      * Line Remove method.
+     * Store the data, this three array.
      */
     private void RemoveRows(Pane pane) {
         ArrayList<Node> rects = new ArrayList<Node>();
         ArrayList<Integer> lines = new ArrayList<Integer>();
         ArrayList<Node> newrects = new ArrayList<Node>();
         int full = 0;
+        /**
+         * Check which line is full.
+         */
         for (int i = 0; i < MESH[0].length; i++) {
             for (int j = 0; j < MESH.length; j++) {
                 if (MESH[j][i] == 1)
@@ -493,9 +497,13 @@ public class Tetris extends Application {
             }
             if (full == MESH.length)
                 lines.add(i);
-            //lines.add(i + lines.size());
+
             full = 0;
         }
+        /**
+         * Delete the row.
+         * Increase <code>score</code> <code>linesNo</code>
+         */
         if (lines.size() > 0)
             do {
                 for (Node node : pane.getChildren()) {
@@ -505,7 +513,9 @@ public class Tetris extends Application {
                 Logger.trace("Line was full.");
                 score += 50;
                 linesNo++;
-
+                /**
+                 * Remove the rectangles from the mesh.
+                 */
                 for (Node node : rects) {
                     Rectangle a = (Rectangle) node;
                     if (a.getY() == lines.get(0) * SIZE) {
@@ -522,6 +532,9 @@ public class Tetris extends Application {
                         a.setY(a.getY() + SIZE);
                     }
                 }
+                /**
+                 * Remove line, and clear the arrays.
+                 */
                 lines.remove(0);
                 rects.clear();
                 newrects.clear();
@@ -566,6 +579,10 @@ public class Tetris extends Application {
     }
 
     private void MoveDown(Form form) {
+        /**
+         * If dont have space.
+         * @param MESH Store the locations.
+         */
         if (form.a.getY() == YMAX - SIZE || form.b.getY() == YMAX - SIZE || form.c.getY() == YMAX - SIZE
                 || form.d.getY() == YMAX - SIZE || moveA(form) || moveB(form) || moveC(form) || moveD(form)) {
             MESH[(int) form.a.getX() / SIZE][(int) form.a.getY() / SIZE] = 1;
@@ -574,6 +591,9 @@ public class Tetris extends Application {
             MESH[(int) form.d.getX() / SIZE][(int) form.d.getY() / SIZE] = 1;
             RemoveRows(group);
 
+            /**
+             * Create the next form and adding to the scene.
+             */
             Form a = nextObj;
             nextObj = Controller.makeRect();
             object = a;
@@ -581,6 +601,11 @@ public class Tetris extends Application {
             moveOnKeyPress(a);
         }
 
+        /**
+         * If have space.
+         * <code>movea</code> <code>moveb</code> <code>movec</code> <code>moved</code> location of the planned step, if 0
+         * it means nothing is there
+         */
         if (form.a.getY() + MOVE < YMAX && form.b.getY() + MOVE < YMAX && form.c.getY() + MOVE < YMAX
                 && form.d.getY() + MOVE < YMAX) {
             int movea = MESH[(int) form.a.getX() / SIZE][((int) form.a.getY() / SIZE) + 1];
