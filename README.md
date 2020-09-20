@@ -1,4 +1,4 @@
-Tetris game made for my Software Engineering class.
+Tetris game made for my Software Enginering class.
 The games goal is destroying lines of blocks before it reaches the top and reach the highest
 score. The program is save the scores, and the destroyed lines number, and enter it to a .json file.
 
